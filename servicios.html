@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+
+<head>
+    <title>TODO supply a title</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+        crossorigin="anonymous"></script>
+    <link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="estilo.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-
+    UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+
+    <!-- Static navbar -->
+    <style>
+        @media (min-width: 768px) {
+            .navbar-collapse ul {
+                margin-top: 20px;
+            }
+        }
+
+        .logo {
+            float: left;
+        }
+
+        .navbar-collapse .navbar-nav.navbar-left:first-child {
+            margin-left: 0px;
+        }
+
+        .gallery {
+            display: inline-block;
+            margin-top: 20px;
+        }
+    </style>
+    <script>
+        window.onload = function () {
+            // Variables
+            let baseDeDatos = [
+                {
+                    id: 1,
+                    nombre: 'Lavado Extrior',
+                    precio: 5000,
+                    imagen: 'fotos/lavado_simple.jpg'
+                },
+                {
+                    id: 2,
+                    nombre: 'Lavado Motor',
+                    precio: 8000,
+                    imagen: 'fotos/lavado_full.jpg'
+                },
+
+
+            ]
+            let $items = document.querySelector('#items');
+            let carrito = [];
+            let total = 0;
+            let $carrito = document.querySelector('#carrito');
+            let $total = document.querySelector('#total');
+            let $botonVaciar = document.querySelector('#boton-vaciar');
+
+            // Funciones
+            function renderItems() {
+                for (let info of baseDeDatos) {
+                    // Estructura
+                    let miNodo = document.createElement('div');
+                    miNodo.classList.add('card', 'col-sm-4');
+                    // Body
+                    let miNodoCardBody = document.createElement('div');
+                    miNodoCardBody.classList.add('card-body');
+                    // Titulo
+                    let miNodoTitle = document.createElement('h5');
+                    miNodoTitle.classList.add('card-title');
+                    miNodoTitle.textContent = info['nombre'];
+                    // Imagen
+                    let miNodoImagen = document.createElement('img');
+                    miNodoImagen.classList.add('img-fluid');
+                    miNodoImagen.setAttribute('src', info['imagen']);
+                    // Precio
+                    let miNodoPrecio = document.createElement('p');
+                    miNodoPrecio.classList.add('card-text');
+                    miNodoPrecio.textContent = '$' + info['precio'];
+                    // Boton 
+                    let miNodoBoton = document.createElement('button');
+                    miNodoBoton.classList.add('btn', 'btn-primary');
+                    miNodoBoton.textContent = '+';
+                    miNodoBoton.setAttribute('marcador', info['id']);
+                    miNodoBoton.addEventListener('click', anyadirCarrito);
+                    // Insertamos
+                    miNodoCardBody.appendChild(miNodoImagen);
+                    miNodoCardBody.appendChild(miNodoTitle);
+                    miNodoCardBody.appendChild(miNodoPrecio);
+                    miNodoCardBody.appendChild(miNodoBoton);
+                    miNodo.appendChild(miNodoCardBody);
+                    $items.appendChild(miNodo);
+                }
+            }
+
+            function anyadirCarrito() {
+                // Anyadimos el Nodo a nuestro carrito
+                carrito.push(this.getAttribute('marcador'))
+                // Calculo el total
+                calcularTotal();
+                // Renderizamos el carrito 
+                renderizarCarrito();
+            }
+
+            function renderizarCarrito() {
+                // Vaciamos todo el html
+                $carrito.textContent = '';
+                // Quitamos los duplicados
+                let carritoSinDuplicados = [...new Set(carrito)];
+                // Generamos los Nodos a partir de carrito
+                carritoSinDuplicados.forEach(function (item, indice) {
+                    // Obtenemos el item que necesitamos de la variable base de datos
+                    let miItem = baseDeDatos.filter(function (itemBaseDatos) {
+                        return itemBaseDatos['id'] == item;
+                    });
+                    // Cuenta el número de veces que se repite el producto
+                    /* let numeroUnidadesItem = carrito.reduce(function (total, itemId) {
+                         return itemId === item ? total += 1 : total;
+                     }, 0);*/
+                    // Creamos el nodo del item del carrito
+                    let miNodo = document.createElement('li');
+                    miNodo.classList.add('list-group-item', 'text-right', 'mx-2');
+                    miNodo.textContent = `${numeroUnidadesItem} x ${miItem[0]['nombre']} - ${miItem[0]['precio']}`;
+                    // Boton de borrar
+                    let miBoton = document.createElement('button');
+                    miBoton.classList.add('btn', 'btn-danger', 'mx-5');
+                    miBoton.textContent = 'X';
+                    miBoton.style.marginLeft = '1rem';
+                    miBoton.setAttribute('item', item);
+                    miBoton.addEventListener('click', borrarItemCarrito);
+                    // Mezclamos nodos
+                    miNodo.appendChild(miBoton);
+                    $carrito.appendChild(miNodo);
+                })
+            }
+
+            function borrarItemCarrito() {
+                console.log()
+                // Obtenemos el producto ID que hay en el boton pulsado
+                let id = this.getAttribute('item');
+                // Borramos todos los productos
+                carrito = carrito.filter(function (carritoId) {
+                    return carritoId !== id;
+                });
+                // volvemos a renderizar
+                renderizarCarrito();
+                // Calculamos de nuevo el precio
+                calcularTotal();
+            }
+
+            function calcularTotal() {
+                // Limpiamos precio anterior
+                total = 0;
+                // Recorremos el array del carrito
+                for (let item of carrito) {
+                    // De cada elemento obtenemos su precio
+                    let miItem = baseDeDatos.filter(function (itemBaseDatos) {
+                        return itemBaseDatos['id'] == item;
+                    });
+                    total = miItem[0]['precio'] * 1.19;
+                }
+                // Formateamos el total para que solo tenga dos decimales
+                let totalDosDecimales = total.toFixed(0);
+                // Renderizamos el precio en el HTML
+                $total.textContent = totalDosDecimales;
+            }
+
+            function vaciarCarrito() {
+                // Limpiamos los productos guardados
+                carrito = [];
+                // Renderizamos los cambios
+                renderizarCarrito();
+                calcularTotal();
+            }
+
+            // Eventos
+            $botonVaciar.addEventListener('click', vaciarCarrito);
+
+            // Inicio
+            renderItems();
+        } 
+    </script>
+</head>
+
+<body>
+    <div class="container">
+
+        <!--  navbar estático -->
+        <div class="navbar navbar-default">
+            <a class="logo"><img src="fotos/logo.jpg"></a>
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+            </div>
+            <div class="navbar-collapse collapse show">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">Inicio</a></li>
+                    <li><a href="servicios.html">Servicios</a></li>
+                    <li><a href="formulario.html">Ordenes de Trabajo</a></li>
+                    <li><a href="agenda.html">Agendar Hora</a></li>
+                    <li><a href="contacto.html">Contacto</a></li>
+
+                </ul>
+
+            </div>
+            <!--cierre del nav del menu -->
+        </div>
+        <!-- Un menu principal para entregar información y dirigir al formulario de ingreso de datos -->
+        <div class="jumbotron">
+            <h1>Infórmese de nuestros servicios!</h1>
+            <p>ofrecemos una amplia gama de Lavados y encerados para su vehículo</p>
+            <p>
+                <a class="btn btn-lg btn-primary" href="index.html">Ir a página Principal »</a>
+                <a class="btn btn-lg btn-primary" href="agenda.html">Agenda tu Hora! »</a>
+            </p>
+        </div>
+
+
+
+    </div> <!-- /container -->
+
+    <hr>
+    <div class="container">
+        <h2>Galería de Servicios</h2>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="thumbnail">
+                    <a href="fotos/aspirado.jpg" target="_blank">
+                        <img src="fotos/aspirado.jpg" alt="Lights" style="width:100%">
+                        <div class="caption" style="text-align:center;">
+                            <p>Aspirado</p>
+                            <p>Precio: $2.000 / Duración: 20 min.</p>
+
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="thumbnail">
+                    <a href="fotos/cera_color.jpg" target="_blank">
+                        <img src="fotos/cera_color.jpg" alt="Lights" style="width:100%">
+                        <div class="caption" style="text-align:center;">
+                            <p>Cera Color</p>
+                            <p>Precio: $4.000 / Duración: 30 min.</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="thumbnail">
+                    <a href="fotos/descontaminado-de-pintura.jpg" target="_blank">
+                        <img src="fotos/descontaminado-de-pintura.jpg" alt="Lights" style="width:100%">
+                        <div class="caption" style="text-align:center;">
+                            <p>Descontaminado Pintura</p>
+                            <p>Precio: $6.000 / Duración: 30 min.</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="thumbnail">
+                    <a href="fotos/full_carnauba.jpg" target="_blank">
+                        <img src="fotos/full_carnauba.jpg" alt="Lights" style="width:100%">
+                        <div class="caption" style="text-align:center;">
+                            <p>Full Simunizado</p>
+                            <p>Precio: $9.000 / Duración: 1 hora</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="thumbnail">
+                    <a href="fotos/lavado-aspirado.jpg" target="_blank">
+                        <img src="fotos/lavado-aspirado.jpg" alt="Lights" style="width:100%">
+                        <div class="caption" style="text-align:center;">
+                            <p>Lavado y Aspirado</p>
+                            <p>Precio: $10.000 / Duración: 1:30 horas</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="thumbnail">
+                    <a href="fotos/lavado_alfombra.jpg" target="_blank">
+                        <img src="fotos/lavado_alfombra.jpg" alt="Lights" style="width:100%">
+                        <div class="caption" style="text-align:center;">
+                            <p>Lavado Alfombra</p>
+                            <p>Precio: $5.000 / Duración: 30 min.</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="thumbnail">
+                    <a href="fotos/lavado_encerado.jpg" target="_blank">
+                        <img src="fotos/lavado_encerado.jpg" alt="Lights" style="width:100%">
+                        <div class="caption" style="text-align:center;">
+                            <p>Lavado Encerado</p>
+                            <p>Precio: $15.000 / Duración: 2 horas.</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="thumbnail">
+                    <a href="fotos/lavado_full.jpg" target="_blank">
+                        <img src="fotos/lavado_full.jpg" alt="Lights" style="width:100%">
+                        <div class="caption" style="text-align:center;">
+                            <p>Lavado Full</p>
+                            <p>Precio: $12.000 / Duración: 1 hora.</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="thumbnail">
+                    <a href="fotos/lavado_simple.jpg" target="_blank">
+                        <img src="fotos/lavado_simple.jpg" alt="Lights" style="width:100%">
+                        <div class="caption" style="text-align:center;">
+                            <p>Precio: $8.000</p>
+                            <p>Duración: 40 min.</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container">
+        <div class="row">
+            <!-- Elementos generados a partir del JSON -->
+            <main id="items" class="col-sm-8 row"></main>
+            <!-- Carrito -->
+            <aside class="col-sm-4">
+
+                <!-- Elementos del carrito -->
+                <ul id="carrito" class="list-group"></ul>
+                <hr>
+                <!-- Precio total -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Reserva</h2>
+
+                        <p class="text-right">Total con IVA(19%):$ <span id="total"></span></p>
+                        <button id="boton-vaciar" class="btn btn-danger">Limpiar</button>
+                        
+                            <a href="agenda.html"><button  id="boton-vaciar" class="btn btn-warning">Reserva</button></a>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <hr>
+    <footer class="page-footer font-small blue">
+        <hr>
+
+        <center>
+            <div class="footer-copyright text-center py-3">© 2020 Marca Registrada
+                <a href="index.html"> Lavado de autos Car Wash</a>
+                <p>Teléfono +596 12345678</p>
+                <p>E-mail: contacto@carwash.cl</p>
+                <a href="instagram.com"><i class="fab fa-instagram fa-3x"></i></a>
+                <a href="facebook.com"><i class="fab fa-facebook fa-3x"></i></a>
+            </div>
+            <a href="index.html"><img src="fotos/logo.jpg" style="width: 100px;height: 100px;"></a>
+        </center>
+
+    </footer>
+</body>
+
+</html>

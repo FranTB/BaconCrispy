@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+
+<head>
+    <title>TODO supply a title</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+        crossorigin="anonymous"></script>
+    <link href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css'>
+    <script src="script2.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-
+UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <!-- Static navbar -->
+    <style>
+        @media (min-width: 768px) {
+            .navbar-collapse ul {
+                margin-top: 20px;
+            }
+        }
+
+        .logo {
+            float: left;
+        }
+
+        .navbar-collapse .navbar-nav.navbar-left:first-child {
+            margin-left: 0px;
+        }
+    </style>
+
+
+
+
+</head>
+
+<body>
+    <div class="container">
+
+        <!--  navbar estático -->
+
+        <div class="navbar navbar-default">
+            <a class="logo"><img src="fotos/logo.jpg"></a>
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+            </div>
+            <div class="navbar-collapse collapse show">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">Inicio</a></li>
+                    <li><a href="servicios.html">Servicios</a></li>
+                    <li><a href="formulario.html">Ordenes de Trabajo</a></li>
+                    <li><a href="agenda.html">Agendar Hora</a></li>
+                    <li><a href="contacto.html">Contacto</a></li>
+
+                </ul>
+
+            </div>
+            <!--cierre del nav del menu -->
+
+        </div>
+        <div class="jumbotron">
+            <h1>Órdenes de Trabajo</h1>
+            <p>Ingresa a continuación los datos para Cliente, Vehículo y Tipo de servicio.</p>
+            <p>
+                <a class="btn btn-lg btn-primary" href="index.html">Ir a página principal »</a>
+                <a class="btn btn-lg btn-primary" href="agenda.html">Agenda tu Hora! »</a>
+            </p>
+        </div>
+        <hr>
+        <div class="container">
+            <h2>Registro de Datos para Órdenes</h2>
+            <div id="accordion">
+                <div class="card">
+                    <div class="card-header">
+                        <a class="card-link" data-toggle="collapse" href="#collapseOne">
+                            CLIENTE
+                        </a>
+                    </div>
+                    <div id="collapseOne" class="collapse " data-parent="#accordion">
+                        <div class="card-body">
+                            <center>
+                                <div class="container">
+                                    <form action="" method="" id="" name="" onsubmit="return validar();"
+                                        class="form-register">
+                                        <div class="form-group">
+                                            <label for="exampleFormControlInput1">Rut:</label>
+                                            <input type="number" class="form-control" id="rutCliente" name="rutCliente"
+                                                placeholder="rut sin puntos ni guión">
+
+
+
+                                        </div>
+                                        <div id="errorRut">
+
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="exampleFormControlInput1">Dígito Verificador:</label>
+                                            <input type="text" class="form-control" id="verificador" name="verificador"
+                                                placeholder="ingrese dígito verificador (k=10) ">
+
+
+                                        </div>
+
+                                        <div id="errorVerificador">
+
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="exampleFormControlInput1">Nombre:</label>
+                                            <input type="text" class="form-control" id="nombreCliente"
+                                                name="nombreCliente" placeholder="ingrese nombre">
+                                        </div>
+
+                                        <div id="errorNombre">
+
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="exampleFormControlInput1">Apellido:</label>
+                                            <input type="text" class="form-control" id="apellidoCliente"
+                                                name="apellidoCliente" placeholder="ingrese apellido">
+                                        </div>
+
+                                        <div id="errorApellido">
+
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="exampleFormControlInput1">Email:</label>
+                                            <input type="email" class="form-control" id="emailCliente"
+                                                name="emailCliente" placeholder="ingrese email" required>
+                                        </div>
+
+                                        <div id="errorEmail">
+
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="exampleFormControlInput1">Dirección: </label>
+                                            <input type="text" class="form-control" id="direccionCliente"
+                                                name="direccionCliente" placeholder="ingrese su dirección">
+
+                                        </div>
+
+                                        <div id="errorDireccion">
+
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="exampleFormControlInput1">Comuna: </label>
+                                            <input type="text" class="form-control" id="comunaCliente"
+                                                name="comunaCliente" placeholder="ingrese su comuna" required>
+                                        </div>
+
+
+                                        <div id="errorComuna"></div>
+
+
+                                        <button type="button" id="botonvalidar" value="Valida"
+                                            onclick="validar(); validarTodos();"
+                                            class="btn btn-primary btn-lg btn-block">Ingresar
+                                            Cliente</button>
+
+                                    </form>
+                                </div>
+                            </center>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <a class="card-link" data-toggle="collapse" href="#collapseTwo">
+                            VEHÍCULO
+                        </a>
+                    </div>
+                    <div id="collapseTwo" class="collapse " data-parent="#accordion">
+                        <div class="card-body">
+
+                            <center>
+                                <div class="container">
+                                    <form onsubmit="return validar2();" class="form-register">
+                                        <div class="form-group">
+                                            <label for="exampleFormControlSelect1">Seleccione Tipo de Vehículo</label>
+                                            <select class="form-control" id="vehiculo" name="vehiculo" required>
+                                                <option value="0">0.- Seleccionar</option>
+                                                <option value="1">1.- Furgón</option>
+                                                <option value="2">2.- Automóvil</option>
+                                                <option value="3">3.- Camión</option>
+                                                <option value="4">4.- Camioneta</option>
+                                                <option value="5">5.- Moto</option>
+
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="exampleFormControlInput1">Marca:</label>
+                                            <input type="text" class="form-control" id="marca" name="marca"
+                                                placeholder="ingrese marca">
+
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="exampleFormControlInput1">Modelo:</label>
+                                            <input type="text" class="form-control" id="modelo" name="modelo"
+                                                placeholder="ingrese modelo">
+
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="exampleFormControlInput1">Año:</label>
+                                            <input type="number" min="1900" max="2021" step="1" value="2020" id="ano"
+                                                name="ano" />
+
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="exampleFormControlSelect1">Eliga si realizó Revisión</label>
+                                            <select class="form-control" id="revision" name="revision" required>
+                                                <option value="0">0.- Seleccionar</option>
+                                                <option value="1">1.- SI</option>
+                                                <option value="2">2.- NO</option>
+
+
+                                            </select>
+
+                                        </div>
+
+                                        <button type="button" onclick="validar2();"
+                                            class="btn btn-primary btn-lg btn-block">Ingresar
+                                            Vehículo</button>
+                                    </form>
+                                </div>
+                            </center>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <a class="card-link" data-toggle="collapse" href="#collapseThree">
+                            SERVICIOS
+                        </a>
+                    </div>
+                    <div id="collapseThree" class="collapse " data-parent="#accordion">
+                        <div class="card-body">
+                            <center>
+                                <div class="container">
+                                    <form onsubmit="return validar3();" class="form-register">
+                                        <div class="form-group">
+                                            <label for="exampleFormControlSelect1">Seleccione Tipo de Servicio</label>
+                                            <select class="form-control" id="tipoServicio" required>
+                                                <option value="0">0.- Seleccione Lavado</option>
+                                                <option value="1">1.- Lavado Exterior ($5.000)</option>
+                                                <option value="2"> 2.- Lavado de Motor ($8.000)</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="exampleFormControlSelect1">Seleccione al Encargado</label>
+                                            <select class="form-control" id="nomTrabajador">
+                                                <option value="0">0.- Seleccione</option>
+                                                <option value="1">1.- Gustavo Navarrete</option>
+                                                <option value="2">2.- Francisco Campos</option>
+                                                <option value="3">3.- Jorge Salazar</option>
+                                                <option value="4">4.- Nicolás Muñoz</option>
+                                            </select>
+                                        </div>
+
+                                        <button type="button" onclick="validar3();"
+                                            class="btn btn-primary btn-lg btn-block">Registrar
+                                            Orden</button>
+                                    </form>
+                            </center>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr>
+        <footer class="page-footer font-small blue">
+            <hr>
+
+            <center>
+                <div class="footer-copyright text-center py-3">© 2020 Marca Registrada
+                    <a href="index.html"> Lavado de autos Car Wash</a>
+                    <p>Teléfono +596 12345678</p>
+                    <p>E-mail: contacto@carwash.cl</p>
+                    <a href="instagram.com"><i class="fab fa-instagram fa-3x"></i></a>
+                    <a href="facebook.com"><i class="fab fa-facebook fa-3x"></i></a>
+                </div>
+                <a href="index.html"><img src="fotos/logo.jpg" style="width: 100px;height: 100px;"></a>
+            </center>
+
+        </footer>
+</body>
+
+</html>
